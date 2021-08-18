@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNet.CodeAnalysis\DotNet.CodeAnalysis.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove=".versionConfig" />
   </ItemGroup>
 
