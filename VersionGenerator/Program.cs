@@ -45,7 +45,20 @@ namespace DotNet.GitHubAction
             Console.CancelKeyPress += delegate { tokenSource.Cancel(); };
             
             var now = DateTime.Now.ToString("yyyyMMddHHmm");
-            var version = await File.ReadAllTextAsync($"{inputs.Directory}/{inputs.VersionFilename}",tokenSource.Token);
+            string version = String.Empty;
+            try
+            {
+                version = await File.ReadAllTextAsync($"{inputs.Directory}/{inputs.VersionFilename}",
+                    tokenSource.Token);
+            }
+            catch (Exception e)
+            {
+            }
+            finally
+            {
+                version = "6.6.6";
+            }
+            
 
             // https://docs.github.com/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
             Console.WriteLine($"::set-output name=artefact-version::{version}-{inputs.Branch}-{now}");
