@@ -40,24 +40,24 @@ namespace DotNet.GitHubAction
         private static async Task BuildVersionString(ActionInputs inputs, IHost host)
         {
             // using ProjectWorkspace workspace = Get<ProjectWorkspace>(host);
-            // using CancellationTokenSource tokenSource = new();
-            //
-            // Console.CancelKeyPress += delegate { tokenSource.Cancel(); };
-            //
+            using CancellationTokenSource tokenSource = new();
+            
+            Console.CancelKeyPress += delegate { tokenSource.Cancel(); };
+            
             var now = DateTime.Now.ToString("yyyyMMddHHmm");
-            string version = "6.6.6";//String.Empty;
-            // try
-            // {
-            //     version = await File.ReadAllTextAsync($"{inputs.Directory}/{inputs.VersionFilename}",
-            //         tokenSource.Token);
-            // }
-            // catch (Exception e)
-            // {
-            // }
-            // finally
-            // {
-            //     version = "6.6.6";
-            // }
+            string version = String.Empty;
+            try
+            {
+                version = await File.ReadAllTextAsync($"{inputs.Directory}/{inputs.VersionFilename}",
+                    tokenSource.Token);
+            }
+            catch (Exception e)
+            {
+            }
+            finally
+            {
+                if(string.IsNullOrEmpty(version)) version = "x.y.z";
+            }
             
 
             // https://docs.github.com/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
